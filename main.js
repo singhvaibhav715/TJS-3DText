@@ -41,6 +41,9 @@ function onWindowResize(){
 
 }
 
+//Create a group for all objects and to ratate simultaniously
+const group =new THREE.Group()
+scene.add(group)
 //Lets Create a Texture Loader
 const textureLoader = new THREE.TextureLoader()
 const matcapTexture= textureLoader.load('/Images/matCaps/matCap1.png')
@@ -114,7 +117,7 @@ fontLoader.load('/fonts/helvetiker_regular.typeface.json',
   dounutMaterial.matcap=matcapTexture2
 
   
-  for(let i=0;i<200;i++){
+  for(let i=0;i<100;i++){
     const donut =new THREE.Mesh(donutGeometry,dounutMaterial)
 
     donut.position.x=(Math.random()-0.5)*10
@@ -129,6 +132,7 @@ fontLoader.load('/fonts/helvetiker_regular.typeface.json',
 
     donutObj.push(donut)
     scene.add(donut)
+    group.add(donut)
   }
 
 })
@@ -137,10 +141,12 @@ fontLoader.load('/fonts/helvetiker_regular.typeface.json',
 function animate() {
   requestAnimationFrame(animate);
   onWindowResize()
-  donutObj.forEach(donut=>{
-    donut.rotation.x+=0.01
-    donut.rotation.y+=0.01
-  })
+  group.rotation.x+=0.001;
+  group.rotation.y+=0.001;
+  // donutObj.forEach(donut=>{
+  //   donut.rotation.x+=0.01
+  //   donut.rotation.y+=0.01
+  // })
   renderer.render(scene, camera);
 }
 
